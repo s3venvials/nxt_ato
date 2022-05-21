@@ -1,8 +1,28 @@
+import react, { useState } from 'react';
+import axios from 'axios';
+
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const run = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get('/api/run?action=ALL');
+      setLoading(false);
+
+      console.log(response);
+      setMessage(response.data.message);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -13,17 +33,18 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Next Auto
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          UI Automation Made Easy
         </p>
 
+        {loading ? <h2>Running...</h2> : <h2 style={{ color: 'green' }}>{message}</h2>}
+
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
+          <a onClick={run} className={styles.card}>
+            <h2>Run Test &rarr;</h2>
             <p>Find in-depth information about Next.js features and API.</p>
           </a>
 
