@@ -1,27 +1,40 @@
 {
-    "name": "next_auto",
-    "version": "0.1.0",
-    "private": true,
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start",
-        "lint": "next lint",
-        "wdio": "wdio run wdio.conf.js"
-    },
-    "dependencies": {
-        "@wdio/cli": "^7.19.7",
-        "@wdio/local-runner": "^7.19.7",
-        "@wdio/mocha-framework": "^7.19.7",
-        "@wdio/spec-reporter": "^7.19.7",
-        "axios": "^0.27.2",
-        "chromedriver": "^101.0.0",
-        "dotenv": "^16.0.1",
-        "eslint": "8.16.0",
-        "eslint-config-next": "12.1.6",
-        "next": "12.1.6",
-        "react": "18.1.0",
-        "react-dom": "18.1.0",
-        "wdio-chromedriver-service": "^7.3.2"
-    }
+  "name": "next_auto",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
+    "eslint": "8.16.0",
+    "eslint-config-next": "12.1.6",
+    "next": "12.1.6",
+    "pusher-js": "^7.1.0-beta",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
+    "socket.io-client": "^4.5.1"
+  },
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "mocha": "^10.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s3venvials/next_auto.git"
+  },
+  "author": "Mark White",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/s3venvials/next_auto/issues"
+  },
+  "homepage": "https://github.com/s3venvials/next_auto#readme"
 }
