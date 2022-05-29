@@ -10,7 +10,7 @@ export default function Home() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   let allMessages = [];
-  const socket = io(`process.env.NEXT_PUBLIC_API_URL`, {
+  const socket = io(`${process.env.NEXT_PUBLIC_API_URL}`, {
     withCredentials: true,
     // extraHeaders: {
     //   "my-custom-header": "abcd"
