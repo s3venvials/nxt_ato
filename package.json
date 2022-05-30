@@ -16,7 +16,9 @@
     "next": "12.1.6",
     "pusher-js": "^7.1.0-beta",
     "react": "18.1.0",
+    "react-bulma-components": "^4.1.0",
     "react-dom": "18.1.0",
+    "react-spring": "^9.4.5",
     "socket.io-client": "^4.5.1"
   },
   "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
