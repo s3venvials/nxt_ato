@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { io } from "socket.io-client";
 import { Panel, Button, Columns } from "react-bulma-components";
+import Socket from "../socket/client";
 
 import UnderscoreSpring from "./UnderscoreSpring";
 
@@ -14,49 +13,58 @@ const StdoutPanel = () => {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState("");
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    const socket = io(`${process.env.NEXT_PUBLIC_API_URL}`, {
-      withCredentials: true,
-      // extraHeaders: {
-      //   "my-custom-header": "abcd"
-      // }
-    });
-
-    socket.on("run", (msg) => {
-      if (msg === "undefined" || msg === "" || typeof msg !== "string") return;
-      const m = msg.replace("\n", "");
-      setMessages((messages += m));
-      const elem = document.getElementById("outputBox");
-      elem.scrollTop = elem.scrollHeight;
-    });
-
-    socket.on("done", (code) => {
-      setLoading(false);
-      if (code !== 0) {
-        setError("There was an issue processing your request.");
-      }
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  const [connected, setConnected] = useState(false);
 
   const run = async () => {
     try {
       setLoading(true);
-      await axios.get("/api/run?action=ALL");
+      if (!connected) {
+        Socket.Connect();
+        setConnected(Socket.IsConnected());
+      }
+      Socket.socket.emit("run", {});
     } catch (error) {
       setLoading(false);
       setError(error.toString());
     }
   };
 
+  useEffect(() => {
+    if (connected) {
+      Socket.socket.on("output", (msg) => {
+        if (msg === "undefined" || msg === "" || typeof msg !== "string")
+          return;
+        const m = msg.replace("\n", "");
+        setMessages((messages += m));
+        const elem = document.getElementById("outputBox");
+        elem.scrollTop = elem.scrollHeight;
+      });
+    }
+  }, [connected]);
+
+  useEffect(() => {
+    Socket.socket.on("done", (code) => {
+      if (code !== 0) {
+        return setError("There was an issue processing your request.");
+      }
+      setLoading(false);
+    });
+  }, []);
+
   return (
     <Columns>
       <Column size={4}></Column>
       <Column size={4}>
+        <h3
+          style={{
+            color: "red",
+            fontWeight: "bold",
+            textAlign: "center",
+            padding: "0.5em",
+          }}
+        >
+          {error}
+        </h3>
         <Panel>
           <Header className={styles.panelHeader}>Run Sample Test!</Header>
           <div id="outputBox" className={styles.outputBox}>
@@ -74,7 +82,13 @@ const StdoutPanel = () => {
           </div>
           <Columns className={styles.panelBtnGrp}>
             <Column size={6}>
-              <Button loading={loading} fullwidth onClick={run} color="primary">
+              <Button
+                loading={loading}
+                fullwidth
+                onClick={run}
+                color="primary"
+                disabled={loading}
+              >
                 Run
               </Button>
             </Column>
