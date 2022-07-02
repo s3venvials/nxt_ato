@@ -12,7 +12,7 @@ import {
 import { faCircleDot, faMessage } from "@fortawesome/free-solid-svg-icons";
 import { urlPatternValidation } from "../utilities";
 
-const TestBuilder = ({ testCreated, passTest }) => {
+const TestBuilder = ({ testCreated }) => {
   const { Header, Block } = Panel;
   const { Column } = Columns;
   const [test, setTest] = useState({
@@ -210,7 +210,6 @@ const TestBuilder = ({ testCreated, passTest }) => {
       );
 
       if (response.status === 200) {
-        passTest(test);
         testCreated(true);
         sessionStorage.setItem("testName", test.name);
       }

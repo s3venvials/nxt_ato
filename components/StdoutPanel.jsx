@@ -7,7 +7,7 @@ import UnderscoreSpring from "./UnderscoreSpring";
 
 import styles from "../styles/Home.module.css";
 
-const StdoutPanel = ({ title, testToRun }) => {
+const StdoutPanel = ({ title }) => {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState("");
   const [error, setError] = useState("");
@@ -18,9 +18,9 @@ const StdoutPanel = ({ title, testToRun }) => {
   const { Column } = Columns;
   const testName = useRef();
 
-  useEffect(() => {
+  if (typeof window !== "undefined") {
     testName.current = sessionStorage.getItem("testName");
-  }, []);
+  }
 
   const run = async () => {
     try {
@@ -29,7 +29,7 @@ const StdoutPanel = ({ title, testToRun }) => {
         Socket.Connect();
         setConnected(Socket.IsConnected());
       }
-      Socket.socket.emit("run", testToRun);
+      Socket.socket.emit("run", testName.current);
     } catch (error) {
       setLoading(false);
       setError(error.toString());

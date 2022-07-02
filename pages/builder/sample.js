@@ -7,7 +7,6 @@ import StdoutPanel from "../../components/StdoutPanel";
 
 const Sample = () => {
   const [testCreated, setTestCreated] = useState(false);
-  const getTest = (t) => t;
 
   if (testCreated) {
     return (
@@ -17,7 +16,7 @@ const Sample = () => {
             Go Back
           </Button>
 
-          <StdoutPanel title="Test Output" testToRun={getTest} />
+          <StdoutPanel title="Test Output" />
         </main>
       </div>
     );
@@ -26,10 +25,7 @@ const Sample = () => {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <TestBuilder
-          testCreated={(value) => setTestCreated(value)}
-          passTest={getTest}
-        />
+        <TestBuilder testCreated={(value) => setTestCreated(value)} />
       </main>
     </div>
   );
