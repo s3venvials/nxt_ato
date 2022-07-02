@@ -10,6 +10,10 @@ export default function Home() {
   const exampleTest = { name: "example.e2e" };
   const goToSampleTest = () => router.push("/builder/sample");
 
+  if (typeof window !== "undefined") {
+    sessionStorage.setItem('testName', exampleTest.name);
+  }
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -30,7 +34,7 @@ export default function Home() {
             </Button>
           </Column>
 
-          <StdoutPanel title="Run Sample Test!" testToRun={exampleTest} />
+          <StdoutPanel title="Run Sample Test!" />
         </Columns>
       </main>
     </div>
