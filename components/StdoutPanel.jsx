@@ -69,7 +69,7 @@ const StdoutPanel = ({ title, testToRun }) => {
     ) {
       axios
         .get(
-          `${process.env.NEXT_PUBLIC_API_URL}/builder/remove?name=${testName.current}.js`
+          `${process.env.NEXT_PUBLIC_API_URL}/builder/remove?name=${testName.current}`
         )
         .then((res) => sessionStorage.removeItem("testName"))
         .catch((err) => setError(err.toString()));
