@@ -12,11 +12,11 @@ const Sample = () => {
     return (
       <div className={styles.container}>
         <main className={styles.main}>
-          <Button color="primary" onClick={() => setTestCreated(false)}>
+          <Button rounded style={{ marginBottom: '1em' }} color="primary" onClick={() => setTestCreated(false)}>
             Go Back
           </Button>
 
-          <StdoutPanel title="Test Output" />
+          <StdoutPanel title="Test Output" customStyle={true} />
         </main>
       </div>
     );

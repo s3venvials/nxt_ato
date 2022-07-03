@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../styles/Home.module.css";
 import {
@@ -11,6 +11,7 @@ import {
 } from "react-bulma-components";
 import { faCircleDot, faMessage } from "@fortawesome/free-solid-svg-icons";
 import { urlPatternValidation } from "../utilities";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 const TestBuilder = ({ testCreated }) => {
   const { Header, Block } = Panel;
@@ -22,6 +23,17 @@ const TestBuilder = ({ testCreated }) => {
     tasks: [],
   });
   const [error, setError] = useState("");
+  const { width } = useWindowDimensions();
+  const [screen, setScreen] = useState("");
+  const mobile = 769;
+
+  useEffect(() => {
+    if (width < mobile) {
+      setScreen("mobile");
+    } else {
+      setScreen("desktop");
+    }
+  }, [width]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -284,7 +296,7 @@ const TestBuilder = ({ testCreated }) => {
           </Panel>
         </Column>
       </Columns>
-      <Button color="link" type="submit" onClick={handleSubmit}>
+      <Button rounded fullwidth={screen === "mobile"} color="link" type="submit" onClick={handleSubmit}>
         Build
       </Button>
     </div>

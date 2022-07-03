@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { Panel, Button, Columns } from "react-bulma-components";
+import { Panel, Button, Columns, Message } from "react-bulma-components";
 import Socket from "../socket/client";
 
 import UnderscoreSpring from "./UnderscoreSpring";
 
 import styles from "../styles/Home.module.css";
 
-const StdoutPanel = ({ title }) => {
+const StdoutPanel = ({ title, customStyle }) => {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState("");
   const [error, setError] = useState("");
@@ -77,17 +77,14 @@ const StdoutPanel = ({ title }) => {
   }, [testStopped]);
 
   return (
-    <div className={styles.stdoutPanel}>
-      <h3
-        style={{
-          color: "red",
-          fontWeight: "bold",
-          textAlign: "center",
-          padding: "0.5em",
-        }}
-      >
-        {error}
-      </h3>
+    <div
+      className={customStyle ? styles.customStdoutPanel : styles.stdoutPanel}
+    >
+      {error && (
+        <Message color="danger">
+          <Message.Body>{error}</Message.Body>
+        </Message>
+      )}
       <Panel>
         <Header className={styles.panelHeader}>{title}</Header>
         <div id="outputBox" className={styles.outputBox}>
@@ -97,7 +94,7 @@ const StdoutPanel = ({ title }) => {
                 o
               ) : (
                 <span>
-                  NxtAuto@machine:~$: <UnderscoreSpring />
+                  NxtAto@machine:~$: <UnderscoreSpring />
                 </span>
               )}
             </p>
@@ -112,12 +109,13 @@ const StdoutPanel = ({ title }) => {
               onClick={run}
               color="primary"
               disabled={loading || disableBtn}
+              rounded
             >
               Run
             </Button>
           </Column>
           <Column size={6}>
-            <Button fullwidth color="link" onClick={() => setMessages("")}>
+            <Button rounded fullwidth color="link" onClick={() => setMessages("")}>
               Clear
             </Button>
           </Column>
