@@ -283,7 +283,7 @@ const TestBuilder = ({ testCreated }) => {
       <Box>
         <p className={styles.descriptionP}>
           To get started, click on an action which will add the action to your
-          steps. To start, I would add the &quote;Navigate&quote; action first and then
+          steps. To start, I would add the &ldquo;Navigate&ldquo; action first and then
           complete the steps form on the right. Once you are done, click on the
           build button. For example, when you run your test it will navigate to
           the website URL you provide.
