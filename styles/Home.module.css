@@ -106,7 +106,7 @@
 }
 
 @media (max-width: 900px) {
-  .stdoutPanel {
+  .customStdoutPanel {
     width: 100%;
   }
   .descriptionP {

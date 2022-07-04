@@ -6,7 +6,7 @@ import TestBuilder from "../../components/TestBuilder";
 import StdoutPanel from "../../components/StdoutPanel";
 
 const Sample = () => {
-  const [testCreated, setTestCreated] = useState(false);
+  const [testCreated, setTestCreated] = useState(true);
 
   if (testCreated) {
     return (
