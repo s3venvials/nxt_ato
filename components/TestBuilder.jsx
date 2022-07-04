@@ -10,8 +10,10 @@ import {
   Message,
 } from "react-bulma-components";
 import { faCircleDot, faMessage } from "@fortawesome/free-solid-svg-icons";
+import toast, { Toaster } from 'react-hot-toast';
 import { urlPatternValidation } from "../utilities";
 import useWindowDimensions from "../hooks/useWindowDimensions";
+import LoadingScreen from "./LoadingScreen";
 
 const TestBuilder = ({ testCreated }) => {
   const { Header, Block } = Panel;
@@ -25,7 +27,10 @@ const TestBuilder = ({ testCreated }) => {
   const [error, setError] = useState("");
   const { width } = useWindowDimensions();
   const [screen, setScreen] = useState("");
+  const [loadingScreen, setShowLoadingScreen] = useState(false);
   const mobile = 769;
+  const addToaster = (step) => toast.success(`Step ${step} Added!`, { position: "bottom-center" });
+  const removeToaster = (step) => toast.success(`Step ${step} Removed!`, { position: "bottom-center" });
 
   useEffect(() => {
     if (width < mobile) {
@@ -34,6 +39,12 @@ const TestBuilder = ({ testCreated }) => {
       setScreen("desktop");
     }
   }, [width]);
+
+  useEffect(() => {
+    if (error !== "" && screen === "mobile") {
+      window.scrollTo(0, 0);
+    }
+  }, [error]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -115,7 +126,7 @@ const TestBuilder = ({ testCreated }) => {
   const addTestStep = (step) => {
     const temp = [...test.tasks];
     if (temp.length === 7) {
-      alert("Limited steps in the sample test builder.");
+      setError("Limited steps in the sample test builder.");
       return;
     }
     temp.push(step);
@@ -123,15 +134,17 @@ const TestBuilder = ({ testCreated }) => {
       ...prevState,
       tasks: temp,
     }));
+    addToaster(step.label);
   };
 
-  const removeTestStep = (index) => {
+  const removeTestStep = (index, label) => {
     const temp = [...test.tasks];
     temp.splice(index, 1);
     setTest((prevState) => ({
       ...prevState,
       tasks: temp,
     }));
+    removeToaster(label);
   };
 
   const handleControls = (event, index) => {
@@ -149,11 +162,15 @@ const TestBuilder = ({ testCreated }) => {
 
     if (!test.name) {
       setError("Please provide a test name.");
+      isValid = false;
       return;
     }
 
     if (test.name === "example.e2e") {
-      setError(`Please use a different test name, ${test.name} is a reserved name`);
+      setError(
+        `Please use a different test name, ${test.name} is a reserved name.`
+      );
+      isValid = false;
       return;
     }
 
@@ -161,6 +178,7 @@ const TestBuilder = ({ testCreated }) => {
       setError(
         "Please provide at least a description, what it does and where to navigate."
       );
+      isValid = false;
       return;
     }
 
@@ -186,6 +204,11 @@ const TestBuilder = ({ testCreated }) => {
 
       return;
     });
+
+    if (test.tasks.find((t) => t.action === "navigate") === undefined) {
+      setError("Please provide an action to navigate to.");
+      isValid = false;
+    }
 
     return isValid;
   };
@@ -216,14 +239,18 @@ const TestBuilder = ({ testCreated }) => {
     test.name = `${test.name}.js`;
 
     try {
+      setShowLoadingScreen(true);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/builder`,
         test
       );
 
       if (response.status === 200) {
-        testCreated(true);
-        sessionStorage.setItem("testName", test.name);
+        setTimeout(() => {
+          setShowLoadingScreen(false);
+          testCreated(true);
+          sessionStorage.setItem("testName", test.name);
+        }, 5000);
       }
     } catch (error) {
       setError(
@@ -231,6 +258,10 @@ const TestBuilder = ({ testCreated }) => {
       );
     }
   };
+
+  if (loadingScreen) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div style={{ width: "80%" }}>
@@ -287,7 +318,7 @@ const TestBuilder = ({ testCreated }) => {
                       onChange={(event) => handleControls(event, index)}
                     />
                     <Icon align="right" size="small">
-                      <Button remove onClick={() => removeTestStep(index)} />
+                      <Button remove onClick={() => removeTestStep(index, e.label)} />
                     </Icon>
                   </Form.Control>
                 </Form.Field>
@@ -296,9 +327,16 @@ const TestBuilder = ({ testCreated }) => {
           </Panel>
         </Column>
       </Columns>
-      <Button rounded fullwidth={screen === "mobile"} color="link" type="submit" onClick={handleSubmit}>
+      <Button
+        rounded
+        fullwidth={screen === "mobile"}
+        color="link"
+        type="submit"
+        onClick={handleSubmit}
+      >
         Build
       </Button>
+      <Toaster />
     </div>
   );
 };
