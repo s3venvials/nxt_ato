@@ -1,7 +1,11 @@
+import { useEffect } from "react";
 import { Progress, Box } from "react-bulma-components";
 import styles from "../styles/Home.module.css";
 
 const LoadingScreen = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className={styles.container}>
       <main className={styles.main}>

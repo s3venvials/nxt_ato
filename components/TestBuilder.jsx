@@ -8,9 +8,10 @@ import {
   Panel,
   Icon,
   Message,
+  Box,
 } from "react-bulma-components";
 import { faCircleDot, faMessage } from "@fortawesome/free-solid-svg-icons";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import { urlPatternValidation } from "../utilities";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import LoadingScreen from "./LoadingScreen";
@@ -29,8 +30,16 @@ const TestBuilder = ({ testCreated }) => {
   const [screen, setScreen] = useState("");
   const [loadingScreen, setShowLoadingScreen] = useState(false);
   const mobile = 769;
-  const addToaster = (step) => toast.success(`Step ${step} Added!`, { position: "bottom-center" });
-  const removeToaster = (step) => toast.success(`Step ${step} Removed!`, { position: "bottom-center" });
+  const addToaster = (step) =>
+    toast.success(`Step ${step} Added!`, {
+      position: "bottom-center",
+      duration: 3000,
+    });
+  const removeToaster = (step) =>
+    toast.success(`Step ${step} Removed!`, {
+      position: "bottom-center",
+      duration: 3000,
+    });
 
   useEffect(() => {
     if (width < mobile) {
@@ -81,7 +90,7 @@ const TestBuilder = ({ testCreated }) => {
   const controls = [
     {
       label: "Navigate",
-      placeholder: "Where We Goin?",
+      placeholder: "Where We Goin? example.com",
       icon: "",
       action: "navigate",
       value: "",
@@ -89,7 +98,7 @@ const TestBuilder = ({ testCreated }) => {
     },
     {
       label: "Write",
-      placeholder: "<value> by <#id>",
+      placeholder: "value by #id",
       icon: "",
       action: "write",
       value: "",
@@ -98,7 +107,7 @@ const TestBuilder = ({ testCreated }) => {
     },
     {
       label: "Click",
-      placeholder: "<#id> OR <button[type='submit']>",
+      placeholder: "#id OR button[type='submit']",
       icon: faCircleDot,
       action: "click",
       value: "",
@@ -106,7 +115,7 @@ const TestBuilder = ({ testCreated }) => {
     },
     {
       label: "Visible",
-      placeholder: "<#id>",
+      placeholder: "#id",
       icon: faCircleDot,
       action: "visible",
       value: "",
@@ -114,7 +123,7 @@ const TestBuilder = ({ testCreated }) => {
     },
     {
       label: "Contains",
-      placeholder: "<value> by <#id>",
+      placeholder: "value by #id",
       icon: faCircleDot,
       action: "contains",
       value: "",
@@ -270,10 +279,20 @@ const TestBuilder = ({ testCreated }) => {
           <Message.Body>{error}</Message.Body>
         </Message>
       )}
+      <h1 className={styles.description}>Test Builder</h1>
+      <Box>
+        <p className={styles.descriptionP}>
+          To get started, click on an action which will add the action to your
+          steps. To start, I would add the "Navigate" action first and then
+          complete the steps form on the right. Once you are done, click on the
+          build button. For example, when you run your test it will navigate to
+          the website URL you provide.
+        </p>
+      </Box>
       <Columns>
         <Column>
           <Panel>
-            <Header className={styles.panelHeader}>Test Builder</Header>
+            <Header className={styles.panelHeader}>Actions</Header>
             <Block>
               <Form.Input placeholder="Search" />
             </Block>
@@ -290,7 +309,7 @@ const TestBuilder = ({ testCreated }) => {
         </Column>
         <Column>
           <Panel>
-            <Header className={styles.panelHeader}>Test Steps</Header>
+            <Header className={styles.panelHeader}>Steps</Header>
             {defaultTestControls.map((e, index) => (
               <Block key={`${e.label}-${index}`} style={{ display: "block" }}>
                 <Form.Field>
@@ -318,7 +337,10 @@ const TestBuilder = ({ testCreated }) => {
                       onChange={(event) => handleControls(event, index)}
                     />
                     <Icon align="right" size="small">
-                      <Button remove onClick={() => removeTestStep(index, e.label)} />
+                      <Button
+                        remove
+                        onClick={() => removeTestStep(index, e.label)}
+                      />
                     </Icon>
                   </Form.Control>
                 </Form.Field>
