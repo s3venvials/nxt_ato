@@ -30,8 +30,8 @@ export default function Home() {
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.description}>UI Automation Made Easy</h1>
-        <Columns>
-          <Column>
+        <Columns style={{ maxWidth: screen === 'desktop' ? '90%' : '100%' }}>
+          <Column size={6}>
             <p className={styles.descriptionP}>
               Build UI automated tests with out code! We use the power of
               Webdriver.io to build and run tests &amp; Socket.io to provide
@@ -51,7 +51,7 @@ export default function Home() {
             </Button>
           </Column>
           {screen === "desktop" && (
-            <Column>
+            <Column size={6}>
               <StdoutPanel title="Run Sample Test!" />
             </Column>
           )}

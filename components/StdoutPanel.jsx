@@ -24,6 +24,7 @@ const StdoutPanel = ({ title, customStyle }) => {
 
   const run = async () => {
     try {
+      setError('');
       setLoading(true);
       if (!connected) {
         Socket.Connect();
@@ -41,7 +42,7 @@ const StdoutPanel = ({ title, customStyle }) => {
       Socket.socket.on("output", (msg) => {
         if (msg === "undefined" || msg === "" || typeof msg !== "string")
           return;
-        const m = msg.replace("\n", "");
+        const m = msg.replaceAll("\n", "").replaceAll("[0-0]", "");
         setMessages((messages += m));
         const elem = document.getElementById("outputBox");
         elem.scrollTop = elem.scrollHeight;
@@ -115,7 +116,16 @@ const StdoutPanel = ({ title, customStyle }) => {
             </Button>
           </Column>
           <Column size={6}>
-            <Button rounded fullwidth color="link" onClick={() => setMessages("")}>
+            <Button
+              rounded
+              fullwidth
+              color="link"
+              onClick={() => {
+                setMessages("");
+                setDisableBtn(false);
+                setError('');
+              }}
+            >
               Clear
             </Button>
           </Column>
