@@ -16,7 +16,7 @@ const Sample = () => {
             Go Back
           </Button>
 
-          <StdoutPanel title="Test Output" customStyle={true} />
+          <StdoutPanel title="Test Output" customStyle={true} showReportBtn={true} />
         </main>
       </div>
     );

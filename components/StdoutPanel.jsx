@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
 import axios from "axios";
 import { Panel, Button, Columns, Message } from "react-bulma-components";
 import Socket from "../socket/client";
@@ -7,16 +8,18 @@ import UnderscoreSpring from "./UnderscoreSpring";
 
 import styles from "../styles/Home.module.css";
 
-const StdoutPanel = ({ title, customStyle }) => {
+const StdoutPanel = ({ title, customStyle, showReportBtn }) => {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState("");
   const [error, setError] = useState("");
   const [connected, setConnected] = useState(false);
   const [testStopped, setTestStopped] = useState(false);
   const [disableBtn, setDisableBtn] = useState(false);
+  const [reportBtnDisabled, setReportBtnDisabled] = useState(true);
   const { Header } = Panel;
   const { Column } = Columns;
   const testName = useRef();
+  const router = useRouter();
 
   if (typeof window !== "undefined") {
     testName.current = sessionStorage.getItem("testName");
@@ -24,7 +27,7 @@ const StdoutPanel = ({ title, customStyle }) => {
 
   const run = async () => {
     try {
-      setError('');
+      setError("");
       setLoading(true);
       if (!connected) {
         Socket.Connect();
@@ -58,6 +61,7 @@ const StdoutPanel = ({ title, customStyle }) => {
       setLoading(false);
       setTestStopped(true);
       setDisableBtn(true);
+      setReportBtnDisabled(false);
     });
   }, []);
 
@@ -77,6 +81,8 @@ const StdoutPanel = ({ title, customStyle }) => {
     }
   }, [testStopped]);
 
+  const goToReporter = () => router.push("/reporter");
+
   return (
     <div
       className={customStyle ? styles.customStdoutPanel : styles.stdoutPanel}
@@ -87,7 +93,21 @@ const StdoutPanel = ({ title, customStyle }) => {
         </Message>
       )}
       <Panel>
-        <Header className={styles.panelHeader}>{title}</Header>
+        <Header className={styles.panelHeader}>
+          {title}
+          {showReportBtn && (
+            <Button
+              style={{ float: "right" }}
+              rounded
+              color="link"
+              size="small"
+              onClick={goToReporter}
+              disabled={reportBtnDisabled}
+            >
+              View Report
+            </Button>
+          )}
+        </Header>
         <div id="outputBox" className={styles.outputBox}>
           {messages.split("INFO").map((o, i) => (
             <p key={i} className={styles.outputMsg}>
@@ -123,7 +143,7 @@ const StdoutPanel = ({ title, customStyle }) => {
               onClick={() => {
                 setMessages("");
                 setDisableBtn(false);
-                setError('');
+                setError("");
               }}
             >
               Clear
