@@ -572,7 +572,7 @@ const TestBuilder = ({ testCreated }) => {
       {showHelper && (
         <Box id={styles.testBuilderHelper}>
           <p style={{ fontWeight: "bold" }}>
-            Welcome and thank you for trying us out! I'll be your guide if you
+            Welcome and thank you for trying us out! I&apos;ll be your guide if you
             need assistance, let me know!
           </p>
           <Button
@@ -598,7 +598,7 @@ const TestBuilder = ({ testCreated }) => {
             size="small"
             style={{ marginTop: "1em" }}
           >
-            I'm Good
+            I&apos;m Good
           </Button>
         </Box>
       )}
