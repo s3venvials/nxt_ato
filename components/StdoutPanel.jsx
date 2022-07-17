@@ -51,7 +51,10 @@ const StdoutPanel = ({ title, customStyle, showReportBtn }) => {
           return;
         const m = msg.replaceAll("\n", "").replaceAll("[0-0]", "");
         if (m.includes('"json" Reporter:{')) {
-          const results = m.split('"json" Reporter:')[1];
+          let results = m.split('"json" Reporter:')[1];
+          if (results.includes("Spec Files:")) {
+            results = results.split("Spec Files:")[0];
+          }
           try {
             resetReporter();
             const parsedResults = JSON.parse(results);
