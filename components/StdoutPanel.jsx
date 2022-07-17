@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { useSetRecoilState } from "recoil";
+import { useSetRecoilState, useResetRecoilState } from "recoil";
 import { reporterState } from "../recoils/builder/atoms";
 import { Panel, Button, Columns, Message } from "react-bulma-components";
 import Socket from "../socket/client";
@@ -19,6 +19,7 @@ const StdoutPanel = ({ title, customStyle, showReportBtn }) => {
   const [disableBtn, setDisableBtn] = useState(false);
   const [reportBtnDisabled, setReportBtnDisabled] = useState(true);
   const setReporter = useSetRecoilState(reporterState);
+  const resetReporter = useResetRecoilState(reporterState);
   const { Header } = Panel;
   const { Column } = Columns;
   const testName = useRef();
@@ -49,11 +50,10 @@ const StdoutPanel = ({ title, customStyle, showReportBtn }) => {
         if (msg === "undefined" || msg === "" || typeof msg !== "string")
           return;
         const m = msg.replaceAll("\n", "").replaceAll("[0-0]", "");
-        console.log(m);
         if (m.includes('"json" Reporter:{')) {
-          console.log(m);
           const results = m.split('"json" Reporter:')[1];
           try {
+            resetReporter();
             const parsedResults = JSON.parse(results);
             setReporter(parsedResults);
           } catch (error) {
