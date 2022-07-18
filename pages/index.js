@@ -11,6 +11,7 @@ export default function Home() {
   const { Column } = Columns;
   const exampleTest = { name: "example.e2e" };
   const goToSampleTest = () => router.push("/builder/sample");
+  const goToStory = () => router.push("/story");
   const { width } = useWindowDimensions();
   const [screen, setScreen] = useState("");
   const mobile = 769;
@@ -40,6 +41,15 @@ export default function Home() {
                 live feed back. Simply tell us where to go and what actions
                 &amp; verifications you want to perform with just a few clicks!
               </p>
+              <Button
+                style={{ width: screen === "mobile" ? "100%" : "30%", marginTop: '0.5em' }}
+                rounded
+                size={screen === "desktop" && "medium"}
+                color="link"
+                onClick={goToStory}
+              >
+                Our Story
+              </Button>{" "}
               <Button
                 style={{ width: screen === "mobile" ? "100%" : "30%", marginTop: '0.5em' }}
                 rounded
