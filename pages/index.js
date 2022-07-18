@@ -30,29 +30,27 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1 className={styles.description}>UI Automation Made Easy</h1>
-        <Columns style={{ maxWidth: screen === "desktop" ? "90%" : "100%" }}>
+        <Columns style={{ maxWidth: screen === "desktop" ? "80%" : "100%" }}>
           <Column size={6}>
-            <p className={styles.descriptionP}>
-              Build UI automated tests with out code! We use the power of
-              Webdriver.io to build and run tests &amp; Socket.io to provide
-              live feed back.
-            </p>
-            <p className={styles.descriptionP}>
-              Simply tell us where to go and what actions &amp; verifications
-              you want to perform with just a few clicks!
-            </p>
-            <Button
-              fullwidth={screen === "mobile"}
-              rounded
-              color="primary"
-              onClick={goToSampleTest}
-            >
-              Try It Out!
-            </Button>
-            <div style={{ marginTop: "2em" }}>
-              <Image src="/NxtAto.gif" height="440" width="800" alt="test" />
-            </div>
+            <Box shadowless={screen === "desktop"} style={{ height: '100%' }}>
+              <h1 className={styles.description}>UI Automation Made Easy</h1>
+              <p className={styles.descriptionP}>
+                Build UI automated tests with out code! We use the power of
+                Webdriver.io to build and run tests &amp; Socket.io to provide
+                live feed back. Simply tell us where to go and what actions
+                &amp; verifications you want to perform with just a few clicks!
+              </p>
+              <Button
+                style={{ width: screen === "mobile" ? "100%" : "30%", marginTop: '0.5em' }}
+                rounded
+                size={screen === "desktop" && "medium"}
+                color="primary"
+                onClick={goToSampleTest}
+              >
+                Try It Out!
+              </Button><br />
+              <Image style={{ marginTop: '2em' }} src="/NxtAto.gif" alt="test" width="800" height="380" />
+            </Box>
           </Column>
           {screen === "desktop" && (
             <Column size={6}>
