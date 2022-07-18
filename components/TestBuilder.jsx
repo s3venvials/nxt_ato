@@ -20,7 +20,7 @@ const TestBuilder = ({ testCreated }) => {
   const { Header, Block } = Panel;
   const { Column } = Columns;
   const [test, setTest] = useState({
-    name: "sample.e2e",
+    name: `sample-${Math.random()}.e2e`,
     description: "",
     does: "",
     tasks: [],
