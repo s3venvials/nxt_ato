@@ -159,7 +159,6 @@ const StdoutPanel = ({ title, customStyle, showReportBtn }) => {
               color="link"
               onClick={() => {
                 setMessages("");
-                setDisableBtn(false);
                 setError("");
               }}
             >

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import StdoutPanel from "../components/StdoutPanel";
 import styles from "../styles/Home.module.css";
-import { Columns, Button } from "react-bulma-components";
+import { Columns, Button, Box } from "react-bulma-components";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 
 export default function Home() {
@@ -30,7 +31,7 @@ export default function Home() {
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.description}>UI Automation Made Easy</h1>
-        <Columns style={{ maxWidth: screen === 'desktop' ? '90%' : '100%' }}>
+        <Columns style={{ maxWidth: screen === "desktop" ? "90%" : "100%" }}>
           <Column size={6}>
             <p className={styles.descriptionP}>
               Build UI automated tests with out code! We use the power of
@@ -49,6 +50,9 @@ export default function Home() {
             >
               Try It Out!
             </Button>
+            <div style={{ marginTop: "2em" }}>
+              <Image src="/NxtAto.gif" height="440" width="800" alt="test" />
+            </div>
           </Column>
           {screen === "desktop" && (
             <Column size={6}>

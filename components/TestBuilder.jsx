@@ -445,10 +445,10 @@ const TestBuilder = ({ testCreated }) => {
         <Columns>
           <Column>
             {showHelperBox && helperStep === 0 && (
-              <HelperBox message="Start by selecting an action here!" />
+              <HelperBox message="Start by selecting an action here! (I'll do this for you!)" />
             )}
             {showHelperBox && helperStep === 4 && (
-              <HelperBox message="Lets add the action Write." />
+              <HelperBox message="Lets add the action Write. (I'll do this for you!)" />
             )}
             <Panel>
               <Header className={styles.panelHeader}>Actions</Header>
@@ -491,13 +491,13 @@ const TestBuilder = ({ testCreated }) => {
               <HelperBox message="For example, shirts by #search_query_top" />
             )}
             {showHelperBox && helperStep === 8 && (
-              <HelperBox message="Now lets fill out the form!" />
+              <HelperBox message="Now lets fill out the form! (I'll do this for you!)" />
             )}
             {showHelperBox && helperStep === 9 && (
               <HelperBox message="We will use a practice site for the navigate URL." />
             )}
             {showHelperBox && helperStep === 10 && (
-              <HelperBox message="Lets add a click action!" />
+              <HelperBox message="Lets add a click action! (I'll do this for you!)" />
             )}
             {showHelperBox && helperStep === 11 && (
               <HelperBox message="Here we can add by ID or button type submit." />
