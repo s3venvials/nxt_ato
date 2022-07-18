@@ -49,7 +49,8 @@ export default function Home() {
               >
                 Try It Out!
               </Button><br />
-              <Image style={{ marginTop: '2em' }} src="/NxtAto.gif" alt="test" width="800" height="380" />
+              <br />
+              <Image src="/NxtAto.gif" alt="test" width="800" height="380" />
             </Box>
           </Column>
           {screen === "desktop" && (
